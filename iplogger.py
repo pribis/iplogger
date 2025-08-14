@@ -17,7 +17,7 @@ flush_limit = 1000 #At what point do we initiate a flush. Based on len(ip array)
 
 ignore = ['66.108.141.252','24.185.40.181','172.97.96.178']
 
-def follow(file, sleep_sec=1) -> Iterator[str]:
+def follow(file, sleep_sec=0.1) -> Iterator[str]:
     """ Yield each line from a file as they are written.
     `sleep_sec` is the time to sleep after empty reads. """
     line = ''
