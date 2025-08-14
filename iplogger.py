@@ -10,12 +10,25 @@
 import time
 from typing import Iterator
 import re
+import os
 
-access_log = '/var/www/boxcar/logs/access.log'
+#Location of access.log
+access_log = 'access.log'
 
 flush_limit = 1000 #At what point do we initiate a flush. Based on len(ip array). Prevents resource issues.
 
 ignore = []
+
+def readIgnore():
+    if not os.path.exists('ignore'):
+        return
+    
+    with open('ignore', 'r') as fh:
+        for ln in fh:
+            if len(ln) > 0:
+                ignore.append(ln.strip())
+
+    print(ignore)
 
 def follow(file, sleep_sec=0.1) -> Iterator[str]:
     """ Yield each line from a file as they are written.
@@ -60,4 +73,5 @@ def main():
 
 
 if __name__ == '__main__':
+    readIgnore()
     main()
