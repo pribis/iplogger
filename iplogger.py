@@ -28,8 +28,6 @@ def readIgnore():
             if len(ln) > 0:
                 ignore.append(ln.strip())
 
-    print(ignore)
-
 def follow(file, sleep_sec=0.1) -> Iterator[str]:
     """ Yield each line from a file as they are written.
     `sleep_sec` is the time to sleep after empty reads. """
@@ -53,9 +51,9 @@ def main():
         file.seek(0, 2)
         for line in follow(file):
 
-            line = re.search('\d+\.\d+\.\d+\.\d+', line)
+            line = re.search(r'\d+\.\d+\.\d+\.\d+', line)
 
-            if line[0]  in ignore:
+            if line[0] in ignore:
                 continue
             
             if line[0].strip() not in u_ip:
