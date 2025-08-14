@@ -15,7 +15,7 @@ access_log = '/var/www/boxcar/logs/access.log'
 
 flush_limit = 1000 #At what point do we initiate a flush. Based on len(ip array). Prevents resource issues.
 
-ignore = ['66.108.141.252','24.185.40.181','172.97.96.178']
+ignore = []
 
 def follow(file, sleep_sec=0.1) -> Iterator[str]:
     """ Yield each line from a file as they are written.
