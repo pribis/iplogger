@@ -11,6 +11,7 @@ import time
 from typing import Iterator
 import re
 import os
+import sys
 
 #Location of access.log
 access_log = 'access.log'
@@ -43,11 +44,19 @@ def follow(file, sleep_sec=0.1) -> Iterator[str]:
         elif sleep_sec:
             time.sleep(sleep_sec)
 
-def main():
+def main(log):
     u_ip = {}
     last_key = ''
     last_val = 0
-    with open(access_log, 'r') as file:
+
+    if log == '':
+        log = access_log
+
+    if not os.path.exists(log):
+        print('The specified access log does not exist or is not defined')
+        exit(1)
+        
+    with open(log, 'r') as file:
         file.seek(0, 2)
         for line in follow(file):
 
@@ -72,4 +81,8 @@ def main():
 
 if __name__ == '__main__':
     readIgnore()
-    main()
+    if len(sys.argv) > 1:
+        main(sys.argv[1])
+    else:
+        main('')
+
