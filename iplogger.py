@@ -14,7 +14,6 @@ import os
 import sys
 
 #Location of access.log
-access_log = 'access.log'
 
 flush_limit = 1000 #At what point do we initiate a flush. Based on len(ip array). Prevents resource issues.
 
@@ -49,13 +48,7 @@ def main(log):
     last_key = ''
     last_val = 0
 
-    if log == '':
-        log = access_log
-
-    if not os.path.exists(log):
-        print('The specified access log does not exist or is not defined')
-        exit(1)
-        
+     
     with open(log, 'r') as file:
         file.seek(0, 2)
         for line in follow(file):
@@ -82,7 +75,11 @@ def main(log):
 if __name__ == '__main__':
     readIgnore()
     if len(sys.argv) > 1:
+        if not os.path.exists(sys.argv[1]):
+            print('The specified access log does not exist or is not defined')
+            exit(1)
+
         main(sys.argv[1])
     else:
-        main('')
+        print('Please specify a log file to monitor.')
 
