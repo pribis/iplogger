@@ -13,8 +13,6 @@ import re
 import os
 import sys
 
-#Location of access.log
-
 flush_limit = 1000 #At what point do we initiate a flush. Based on len(ip array). Prevents resource issues.
 
 ignore = []
